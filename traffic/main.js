@@ -22,6 +22,7 @@ function initialize(){
       var bounds = new google.maps.LatLngBounds();
 
       $('#duration').html(result.routes[0].legs[0].duration.text);
+      $('#duration-container').show();
 
       var steps = result.routes[0].legs[0].steps;
       for(var i=0; i<steps.length; i++){
