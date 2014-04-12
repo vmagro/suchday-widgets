@@ -1,3 +1,7 @@
+.event {
+  font-size: 20px;
+}
+
 .event:not(:last-child) {
   border-bottom: 1px solid black;
 }
@@ -13,5 +17,5 @@
 }
 
 #events {
-  width: 200px;
+  width: 300px;
 }
