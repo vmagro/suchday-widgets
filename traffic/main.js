@@ -10,31 +10,43 @@ function initialize(){
   var map = map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   directionsDisplay.setMap(map);
 
-  var request = {
-    destination: new google.maps.LatLng(34.0216178894, -118.2824554443),
-    origin: new google.maps.LatLng(34.073703, -118.445270),
-    travelMode: google.maps.TravelMode.DRIVING
-  };
+  var geocoder = new google.maps.Geocoder();
+  var query = URI.parseQuery(URI.parse(window.location.href).query);
 
-  directionsService.route(request, function(result, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-      console.log(result);
-      var bounds = new google.maps.LatLngBounds();
+  console.log(query);
+  geocoder.geocode({address: query.destinationAddress}, function(results){
+    var destination = results[0].geometry.location;
+    var origin = new google.maps.LatLng(query.lat, query.lng);
 
-      $('#duration').html(result.routes[0].legs[0].duration.text);
-      $('#duration-container').show();
+    var request = {
+      destination: destination,
+      origin: origin,
+      travelMode: google.maps.TravelMode.DRIVING
+    };
 
-      var steps = result.routes[0].legs[0].steps;
-      for(var i=0; i<steps.length; i++){
-        for(var j=0; j<steps[i].lat_lngs.length; j++)
-          bounds.extend(steps[i].lat_lngs[j]);
+    console.log(request);
+
+    directionsService.route(request, function(result, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        console.log(result);
+        var bounds = new google.maps.LatLngBounds();
+
+        $('#duration').html(result.routes[0].legs[0].duration.text);
+        $('#duration-container').show();
+
+        var steps = result.routes[0].legs[0].steps;
+        for(var i=0; i<steps.length; i++){
+          for(var j=0; j<steps[i].lat_lngs.length; j++)
+            bounds.extend(steps[i].lat_lngs[j]);
+        }
+
+        directionsDisplay.setDirections(result);
+        map.fitBounds(bounds);
+        map.panToBounds(bounds);
       }
-
-      directionsDisplay.setDirections(result);
-      map.fitBounds(bounds);
-      map.panToBounds(bounds);
-    }
+    });
   });
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
