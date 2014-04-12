@@ -1,11 +1,19 @@
 function OnLoadCallback(){
   console.log("google api loaded");
 
-  gapi.auth.authorize({client_id: '99312021964-5hc9j067l4svgh87sg3vc8ran4m1ctbm.apps.googleusercontent.com', scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me', immediate: false}, function(){
+  gapi.client.setApiKey('AIzaSyASRN6XuVMrnZYNE2oQDWDNiVs9v6nwuMU');
+  gapi.auth.setToken(
+    {
+      access_token: 'ya29.1.AADtN_WgctsHMjzCyGihhqiH6FHntTe8eKDW1B_DeMweTIAEMZPkt-j8CGcjB1dhkJu2HA',
+      token_type: 'Bearer'
+    });
+  gapi.auth.init(function(){
+  //gapi.auth.authorize({client_id: '99312021964-5hc9j067l4svgh87sg3vc8ran4m1ctbm.apps.googleusercontent.com', scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me', immediate: false}, function(){
     gapi.client.load('calendar', 'v3', function(){
       console.log('loaded calendar api');
       var request = gapi.client.calendar.calendarList.list();
       request.execute(function(resp){
+        console.log(resp);
         var calendars = resp.items;
         for(var i=0; i<calendars.length; i++){
           //only show visible calendars
