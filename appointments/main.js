@@ -1,5 +1,3 @@
-var events = [];
-
 function OnLoadCallback(){
   console.log("google api loaded");
 
@@ -10,21 +8,23 @@ function OnLoadCallback(){
       request.execute(function(resp){
         var calendars = resp.items;
         for(var i=0; i<calendars.length; i++){
-          var start = new Date();
-          var end = new Date();
-          end.setDate(start.getDate() + 1);
-          var req = gapi.client.calendar.events.list({calendarId: calendars[i].id, timeMax: end, timeMin: start});
-          req.execute(function(calEvents){
-            if(calEvents.items){
-              var items = calEvents.items;
-              for(var i=0; i<items.length; i++){
-                if(items[i].summary){
-                  $('#events').append('<div class="event">'+items[i].summary+'</div>');
-                  events.push(items[i]);
+          //only show visible calendars
+          if(calendars[i].selected){
+            var start = new Date();
+            var end = new Date();
+            end.setDate(start.getDate() + 1);
+            var req = gapi.client.calendar.events.list({calendarId: calendars[i].id, timeMax: end, timeMin: start});
+            req.execute(function(calEvents){
+              if(calEvents.items){
+                var items = calEvents.items;
+                for(var i=0; i<items.length; i++){
+                  if(items[i].summary){
+                    $('#events').append('<div class="event">'+items[i].summary+'</div>');
+                  }
                 }
               }
-            }
-          });
+            });
+          }
         }
       });
     });
