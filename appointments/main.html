@@ -1,16 +1,19 @@
 <html>
 <head>
+  <link rel="stylesheet" href="../main.css">
+  <link rel="stylesheet" href="appointments.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="main.js"></script>
   <script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
 </head>
 
 <body>
-  <div id="event-template" style="display: none">
+  <div id="event-template" class="event" style="display: none">
     <div class="event-title"></div>
     <div class="event-time"></div>
+    <div style="clear:both"></div>
   </div>
-  
+
   <div id="events"></div>
 </body>
 

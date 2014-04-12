@@ -1,0 +1,17 @@
+.event:not(:last-child) {
+  border-bottom: 1px solid black;
+}
+
+.event-title {
+  float: left;
+  font-weight: 400;
+}
+
+.event-time {
+  float: right;
+  margin-left: 15px;
+}
+
+#events {
+  width: 200px;
+}
