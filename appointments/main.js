@@ -21,6 +21,7 @@ function OnLoadCallback(){
                   var item = items[i];
                   if(item.summary){
                     var event = $('#event-template').clone();
+                    event.removeAttr('id');
                     $(event.find('.event-title')).html(item.summary);
 
                     var start = item.start;
