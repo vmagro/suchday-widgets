@@ -1,0 +1,15 @@
+html {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+.card {
+  padding: 15px 15px 15px 15px;
+  border: 1px solid #333;
+}
+
+.card-title {
+  font-size: 25px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
