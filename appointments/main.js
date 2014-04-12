@@ -18,8 +18,32 @@ function OnLoadCallback(){
               if(calEvents.items){
                 var items = calEvents.items;
                 for(var i=0; i<items.length; i++){
-                  if(items[i].summary){
-                    $('#events').append('<div class="event">'+items[i].summary+'</div>');
+                  var item = items[i];
+                  if(item.summary){
+                    var event = $('#event-template').clone();
+                    $(event.find('.event-title')).html(item.summary);
+
+                    var start = item.start;
+                    var end = item.end;
+                    if(start.date)
+                      $(event.find('.event-time')).html('All day');
+                    else{
+                      start = new Date(start.dateTime).getHours();
+                      end = new Date(end.dateTime).getHours();
+                      if(start < 12)
+                        start += "AM";
+                      else
+                        start = start - 12 + "PM";
+                      if(end < 12)
+                        end += "AM";
+                      else
+                        end = end - 12 + "PM";
+                      var string = start + '-' + end;
+                      $(event.find('.event-time')).html(string);
+                    }
+
+                    $('#events').append(event);
+                    event.show();
                   }
                 }
               }
