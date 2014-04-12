@@ -14,7 +14,7 @@ function initialize(){
   var query = URI.parseQuery(URI.parse(window.location.href).query);
 
   console.log(query);
-  geocoder.geocode({address: query.destinationAddress}, function(results){
+  geocoder.geocode({address: query.destination}, function(results){
     var destination = results[0].geometry.location;
     var origin = new google.maps.LatLng(query.lat, query.lng);
 
