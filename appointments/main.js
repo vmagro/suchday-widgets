@@ -1,7 +1,6 @@
 function OnLoadCallback(){
   var accessToken = URI.parseQuery(URI.parse(window.location.href).query).accessToken;
 
-  gapi.client.setApiKey('AIzaSyASRN6XuVMrnZYNE2oQDWDNiVs9v6nwuMU');
   gapi.auth.setToken(
     {
       access_token: accessToken,
@@ -9,6 +8,7 @@ function OnLoadCallback(){
     });
   gapi.auth.init(function(){
   //gapi.auth.authorize({client_id: '99312021964-5hc9j067l4svgh87sg3vc8ran4m1ctbm.apps.googleusercontent.com', scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me', immediate: false}, function(){
+    console.log('authorized');
     gapi.client.load('calendar', 'v3', function(){
       var request = gapi.client.calendar.calendarList.list();
       request.execute(function(resp){
