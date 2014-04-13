@@ -1,9 +1,19 @@
 //var baseUrl = 'http://suchday/';
 var baseUrl = 'http://107.170.192.218/';
-var userId = 12345;
+var userId = '102190104458073909670';
+var mode = 'blank';
 
-$(function(){
-  $.getJSON(baseUrl + 'widgets?user='+userId, function(data){
+function poll(){
+  $.get(baseUrl + 'mode?user='+userId, function(data){
+    if(mode != data){
+      update();
+      mode = data;
+    }
+  });
+}
+
+function update(){
+  $.getJSON(baseUrl + 'widgets?user='+userId+'&mode='+mode, function(data){
     for(var i=0; i<data.length; i++){
       var widget = data[i];
       var url = widget.url + "?";
@@ -20,4 +30,6 @@ $(function(){
       //$('body').append(div);
     }
   });
-});
+}
+
+setInterval(poll, 5000);
