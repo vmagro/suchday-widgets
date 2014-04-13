@@ -13,7 +13,7 @@ body.day {
 }
 
 body.night {
-  backgroudn-image: url('nightbg.jpg');
+  background-image: url('nightbg.jpg');
 }
 
 h1 {
