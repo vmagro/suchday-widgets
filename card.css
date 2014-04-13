@@ -1,4 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Signika:400,300,600,700);
+body {
+	overflow: hidden;
+}
 .card {
   color: #fff;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
