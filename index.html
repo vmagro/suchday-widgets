@@ -1,0 +1,29 @@
+<html>
+<head>
+  <link rel="stylesheet" href="main.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="masonry.pkgd.min.js"></script>
+  <script src="uri.min.js"></script>
+  <script src="main.js"></script>
+</head>
+
+<body>
+  <script type="text/javascript">
+    window["traffic"] = {};
+    window["traffic"]["destination"] = "642 West 34th Street, Los Angeles, CA";
+    window["traffic"]["traffic.lat"] = 34.073703;
+    window["traffic"]["traffic.lng"] =-118.445270;
+
+    $(function(){
+      $('.item').attr('src', 'http://localhost/~vmagro/widgets/traffic/traffic.html?lat=34.073703&lng=-118.445270&destination=642%20West%2034th%20Street%20Los%20Angeles');
+    });
+  </script>
+  <div id="container" class="js-masonry" data-masonry-options='{ "columnWidth": 200, "itemSelector": ".item" }'>
+    <iframe class="item large"></iframe>
+    <iframe class="item normal"></iframe>
+    <iframe class="item large"></iframe>
+    <iframe class="item large"></iframe>
+  </div>
+</body>
+
+</html>
