@@ -4,37 +4,30 @@
 <head>
     <meta charset="utf-8">
     <title>Music control</title>
-    <link href="../main.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://ptzlabs.com/dw/card.css">
     <link href="music.css" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
     <audio id="music-widget"></audio>
-    <div id="imageHolder" class="album-bg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2">
-                    <a id="back-button" href="#"><i class="fa fa-fast-backward fa-3x fa-inverse play-status-pad"></i></a>
-                    <a id="play-button" href="#"><i class="fa fa-play fa-3x fa-inverse play-status-pad"></i></a>
-                    <a id="pause-button" href="#"><i id="pause-button" class="fa fa-pause fa-3x fa-inverse play-status-pad"></i></a>
-                    <a id="next-button" href="#"><i class="fa fa-fast-forward fa-3x fa-inverse play-status-pad"></i></a>
-                </div>
-                <div class="col-md-5 mid-vert-align">
-                    <h4 id="now-playing-text" class="text-muted"><b>Now playing: <em>Nothing playing right now</em></b></h4>
-                </div>
-                <div class="col-md-3 mid-vert-align-progress">
-                    <div class="progress">
-                        <div id="progress-bar" class="progress-bar mid-vert-align" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-                        </div>
+    <div class="card">
+            <div class="buttons">
+                <a id="back-button" href="#"><i class="fa fa-fast-backward fa-3x fa-inverse play-status-pad"></i></a>
+                <a id="play-button" href="#"><i class="fa fa-play fa-3x fa-inverse play-status-pad"></i></a>
+                <a id="pause-button" href="#"><i id="pause-button" class="fa fa-pause fa-3x fa-inverse play-status-pad"></i></a>
+                <a id="next-button" href="#"><i class="fa fa-fast-forward fa-3x fa-inverse play-status-pad"></i></a>
+            </div>
+                <div id="now-playing-text" class="text-muted">Now playing: <em>Nothing playing right now</em></div>
+            <div class="col-md-3 mid-vert-align-progress">
+                <div class="progress">
+                    <div id="progress-bar" class="progress-bar mid-vert-align" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <h2 class="text-muted"><div id="play-time"></div></h2>
-                </div>
             </div>
-        </div>
+            <div class="col-md-2">
+                <h2 class="text-muted"><div id="play-time"></div></h2>
+            </div>        
     </div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
