@@ -41,10 +41,15 @@ function update(){
       var div = $('<iframe>');
       div.attr('src', url);
       div.addClass('item');
-      if(i == 0){ div.addClass('large'); }
       
-      $('#container').append(div);
+      // ZOMG HACKS
+      if(widget.name == 'Appointments' || widget.name == 'Fireplace') {
+        $('#container').prepend(div);
+      } else {
+        $('#container').append(div);
+      }
     }
+    $($("#container").children()[0]).addClass('large');
   });
 }
 
