@@ -1,0 +1,33 @@
+body {
+	margin: 0;
+    padding: 0;
+}
+
+.album-bg {
+	background:url(wallpaper-54773.jpg);
+    height: 75px;
+	width: 100%;
+    margin: 0 0 0 0;
+}
+
+.play-status-pad {
+    position: relative;
+    top: 17px;
+	bottom: 17px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.space {
+    margin-left: 50;
+}
+
+.mid-vert-align {
+    top: 17px;
+	bottom: 17px;
+}
+
+.mid-vert-align-progress {
+    top: 27px;
+	bottom: 27px;
+}

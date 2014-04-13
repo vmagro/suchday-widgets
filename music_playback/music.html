@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Music control</title>
+    <link href="../main.css" rel="stylesheet">
+    <link href="music.css" rel="stylesheet" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <audio id="music-widget"></audio>
+    <div id="imageHolder" class="album-bg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <a id="back-button" href="#"><i class="fa fa-fast-backward fa-3x fa-inverse play-status-pad"></i></a>
+                    <a id="play-button" href="#"><i class="fa fa-play fa-3x fa-inverse play-status-pad"></i></a>
+                    <a id="pause-button" href="#"><i id="pause-button" class="fa fa-pause fa-3x fa-inverse play-status-pad"></i></a>
+                    <a id="next-button" href="#"><i class="fa fa-fast-forward fa-3x fa-inverse play-status-pad"></i></a>
+                </div>
+                <div class="col-md-5 mid-vert-align">
+                    <h4 id="now-playing-text" class="text-muted"><b>Now playing: <em>Nothing playing right now</em></b></h4>
+                </div>
+                <div class="col-md-3 mid-vert-align-progress">
+                    <div class="progress">
+                        <div id="progress-bar" class="progress-bar mid-vert-align" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h2 class="text-muted"><div id="play-time"></div></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="music.js"></script>
+    <script src="moment.min.js"></script>
+    <script>
+        var currentTrackDuration;
+        $(window).bind("load", function() {
+            //Some initial element that need to initially be hidden
+            $("#pause-button").hide();
+            //Initialize some hack-y stuff. Because. You know. This *is* a hackathon
+            var currentTrack = 0;
+            var scClientIDFrag = "?client_id=498a8a1312c538b970408600153ae43e";
+            var safeTrackData = [];
+            $.getJSON("http://api.soundcloud.com/playlists/405726/tracks.json?client_id=498a8a1312c538b970408600153ae43e", function(json) {
+                var tracksResult = [];
+                json.forEach(function(element, index, array) {
+                    console.log(element);
+                    tracksResult.push(element);
+                });
+                safeTrackData = tracksResult;
+                $("#music-widget")[0].src = safeTrackData[0].stream_url + scClientIDFrag;
+            });
+            $("#music-widget")[0].addEventListener('timeupdate', function() {
+                progressTime = setInterval(updatePlayTime, 1000);
+                currentTrackDuration = convertFromSeconds($("#music-widget")[0].duration);
+                progressBarTimer = setInterval(function() {
+                    percentDone = ($("#music-widget")[0].currentTime / $("#music-widget")[0].duration) * 100;
+                    $("#progress-bar").css("width", percentDone + "%");
+                }, 250);
+            });
+            $("#music-widget")[0].addEventListener('pause', function() {
+                clearInterval(progressTime);
+                clearInterval(progressBarTimer);
+            });
+            $("#music-widget")[0].addEventListener('ended', function() {
+                if (safeTrackData[currentTrack + 1]) {
+                    $("#music-widget")[0].src = safeTrackData[currentTrack + 1].stream_url + scClientIDFrag;
+                    currentTrack++;
+                    $("#now-playing-text").html("<b>Now playing: <em>" + safeTrackData[currentTrack].title + " from: " + safeTrackData[currentTrack].user.username + "</em></b>");
+                    $("#music-widget")[0].play();
+                    $("#back-button").visible();
+                } else {
+                    $("#next-button").invisible();
+                }
+            });
+            //When the play button is clicked, hide the play button, and display the pause button
+            $("#play-button").click(function(e) {
+                e.preventDefault();
+                $("#music-widget")[0].play();
+                $("#now-playing-text").html("<b>Now playing: <em>" + safeTrackData[currentTrack].title + " from: " + safeTrackData[currentTrack].user.username + "</em></b>");
+                $(this).hide();
+                if (!safeTrackData[currentTrack - 1]) {
+                    $("#back-button").invisible();
+                }
+                $("#pause-button").show();
+                if (!safeTrackData[currentTrack + 1]) {
+                    $("#next-button").invisible();
+                }
+            });
+            //When the pause button is clicked, hide the pause button, and display the play button
+            $("#pause-button").click(function(e) {
+                e.preventDefault();
+                $("#music-widget")[0].pause();
+                $("#now-playing-text").html("<b>Paused: <em>" + safeTrackData[currentTrack].title + " from: " + safeTrackData[currentTrack].user.username + "</em></b>");
+                $(this).hide();
+                $("#play-button").show();
+            });
+            $("#next-button").click(function(e) {
+                e.preventDefault();
+                if (!$("#music-widget")[0].paused) {
+                    $("#music-widget")[0].src = safeTrackData[currentTrack + 1].stream_url + scClientIDFrag;
+                    currentTrack++;
+                    $("#now-playing-text").html("<b>Now playing: <em>" + safeTrackData[currentTrack].title + " from: " + safeTrackData[currentTrack].user.username + "</em></b>");
+                    $("#music-widget")[0].play();
+                    if (!safeTrackData[currentTrack + 1]) {
+                        $("#next-button").invisible();
+                    }
+                    if (safeTrackData[currentTrack - 1]) {
+                        $("#back-button").visible();
+                    }
+                }
+            });
+            $("#back-button").click(function(e) {
+                e.preventDefault();
+                if (!$("#music-widget")[0].paused || $("#music-widget")[0].ended) {
+                    $("#music-widget")[0].src = safeTrackData[currentTrack - 1].stream_url + scClientIDFrag;
+                    currentTrack--;
+                    $("#now-playing-text").html("<b>Now playing: <em>" + safeTrackData[currentTrack].title + " from: " + safeTrackData[currentTrack].user.username + "</em></b>");
+                    $("#music-widget")[0].play();
+                    if (!safeTrackData[currentTrack - 1]) {
+                        $("#back-button").invisible();
+                    }
+                    if (safeTrackData[currentTrack + 1]) {
+                        $("#next-button").visible();
+                    }
+                }
+            });
+        });
+        jQuery.fn.visible = function() {
+            return this.css('visibility', 'visible');
+        };
+
+        jQuery.fn.invisible = function() {
+            return this.css('visibility', 'hidden');
+        };
+
+        $("#music-widget")[0].addEventListener('loadedmetadata', function() {
+            currentTrackDuration = convertFromSeconds($("#music-widget")[0].duration);
+        });
+
+        function updatePlayTime() {
+            var currentTime = moment($("#music-widget")[0].currentTime, 's.SSS');
+            $("#play-time").html(currentTime.format("m:ss") + "/" + currentTrackDuration.format("m:ss"));
+        };
+
+        function convertFromSeconds(input) {
+            var minutes = new String(Math.floor(input / 60));
+            var seconds = new String(input % 60);
+            return moment(minutes + ":" + seconds + ".", 'm:s.SSS');
+        };
+    </script>
+
+    <!--
+    <div id="canvasHolder" class="album-bg">
+        <script>
+            document.write('<canvas id="canv" width="' + $(window).width() + '" height="75"></canvas>');
+        </script>
+    </div>
+    <script src="stackBlur.js"></script>
+    <script>
+        $(document).ready(function() {
+            stackBlurImage("srcimg", "canv", 100, false);
+        });
+    </script>
+-->
+</body>
+
+</html>
