@@ -7,7 +7,7 @@ function initialize(){
     center: new google.maps.LatLng(-34.397, 150.644),
     disableDefaultUI: true
   };
-  var map = map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   directionsDisplay.setMap(map);
 
   var geocoder = new google.maps.Geocoder();
