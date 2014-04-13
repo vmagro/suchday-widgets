@@ -19,7 +19,7 @@ var myInfo;
       $("#unread-count").html(getReadUnreadString());
       var convoListHtml;
       for (var i = 0; i < getConversationIndexCount(); i++) {
-          convoListHtml += ("<div class="conversation"><strong>" + prettyParticipants(i) + "</strong><br />" + getConversationSnippet(i) + "<br /><em>" + getDateString(i) + "</em></div>")
+          convoListHtml += ("<div class="conversation"><strong>" + prettyParticipants(i) + "</strong><br />" + getConversationSnippet(i) + "<br /><em>" + getDateString(i) + "</em></div>");
       }
       $("#recent-convos").empty().html(convoListHtml);
   });
