@@ -38,7 +38,7 @@ h1 {
 }
 .item {
   border: 0;
-  overflow: none;
+  overflow: hidden;
   margin-right: 10px;
   margin-bottom: 10px;
   background: rgba(0,0,0,0.2);
