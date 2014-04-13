@@ -12,7 +12,7 @@ function OnLoadCallback(){
   gapi.auth.authorize({
       client_id: '99312021964-5hc9j067l4svgh87sg3vc8ran4m1ctbm.apps.googleusercontent.com',
       scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me',
-      immediate: false
+      immediate: true
     },
     load);
   }
