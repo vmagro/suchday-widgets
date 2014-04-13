@@ -40,10 +40,14 @@ function OnLoadCallback(){
                       end = new Date(end.dateTime).getHours();
                       if(start < 12)
                         start += "AM";
+                      else if(start == 12)
+                        start = '12PM';
                       else
-                        start = start - 12 + "PM";
+                        start - 12 + "PM";
                       if(end < 12)
                         end += "AM";
+                      else if(end == 12)
+                        end = '12PM';
                       else
                         end = end - 12 + "PM";
                       var string = start + '-' + end;
