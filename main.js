@@ -27,9 +27,31 @@ function update(){
       console.log(url);
       var div = $('<iframe>');
       div.attr('src', url);
-      //$('body').append(div);
+      $('#container').append(div);
     }
   });
 }
 
-setInterval(poll, 5000);
+function startTime() {
+  var today=new Date();
+  var h=today.getHours();
+  var m=today.getMinutes();
+  var s=today.getSeconds();
+  // add a zero in front of numbers<10
+  m=checkTime(m);
+  s=checkTime(s);
+  $("#clock").html(h + ":" + m);
+  setTimeout(function(){startTime()},3000);
+}
+
+function checkTime(i) {
+  if (i<10) {
+    i="0" + i;
+  }
+  return i;
+}
+
+$(document).ready(function() {
+  setInterval(poll, 5000);
+  startTime();
+});
