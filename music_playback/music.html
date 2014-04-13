@@ -51,6 +51,7 @@
                 safeTrackData = tracksResult;
                 $("#music-widget")[0].src = safeTrackData[0].stream_url + scClientIDFrag;
             });
+
             $("#music-widget")[0].addEventListener('timeupdate', function() {
                 progressTime = setInterval(updatePlayTime, 1000);
                 currentTrackDuration = convertFromSeconds($("#music-widget")[0].duration);
@@ -126,6 +127,17 @@
                     }
                 }
             });
+            //The following lines is basically a dupe of the above so we can autoplay music
+            setTimeout(function() {
+                console.log("This event started");
+                $("#music-widget")[0].play();
+                $("#now-playing-text").html("<b>Now playing: <em>" + safeTrackData[currentTrack].title + " from: " + safeTrackData[currentTrack].user.username + "</em></b>");
+                $("#play-button").hide();
+                if (!safeTrackData[currentTrack - 1]) {
+                    $("#back-button").invisible();
+                }
+                $("#pause-button").show();
+            }, 1000);
         });
         jQuery.fn.visible = function() {
             return this.css('visibility', 'visible');
