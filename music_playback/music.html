@@ -42,7 +42,12 @@
             var currentTrack = 0;
             var scClientIDFrag = "?client_id=498a8a1312c538b970408600153ae43e";
             var safeTrackData = [];
-            $.getJSON("http://api.soundcloud.com/playlists/405726/tracks.json?client_id=498a8a1312c538b970408600153ae43e", function(json) {
+            if (URI.parseQuery(URI.parse(window.location.href).query).playlistID) {
+                var playlistID = URI.parseQuery(URI.parse(window.location.href).query).playlistID;
+            } else {
+                playlistID = 30395178;
+            }
+            $.getJSON("http://api.soundcloud.com/playlists/" + playlistID + "/tracks.json?client_id=498a8a1312c538b970408600153ae43e", function(json) {
                 var tracksResult = [];
                 json.forEach(function(element, index, array) {
                     console.log(element);
