@@ -2,7 +2,7 @@ var inboxData;
 var myInfo;
 
 (function() {
-  var accessToken = URI.parseQuery(URI.parse(window.location.href).query).accessToken;
+  var accessToken = "CAAVHEx8VilQBAENvDP9SnEhQZAfIYsOwDVfcdEUbyZCDZAGBReoYOVUZCZBqZAZBZBMnrZA8HiLOfff2zo6HNLzD9h8XcEdtmrHvlr2RrMTlAXAkeYydWArwxodLKoPZCjo42eM0pnfg7CnkOBVCLYxbkTqLvfu6dnhZAiX1hZAriIiWXkZB1IZBModxZB9Xd7hvRy2Hv8ZD";
   $.getJSON("https://graph.facebook.com/me/inbox?access_token=" + accessToken, function(json) {
       console.log("We attempted to get inbox data");
       console.log("Inbox length: " + json.data.length)
