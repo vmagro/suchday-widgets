@@ -54,7 +54,7 @@ function load(){
                     else if(start == 12)
                       start = '12PM';
                     else
-                      start - 12 + "PM";
+                      start = start - 12 + "PM";
                     if(end < 12)
                       end += "AM";
                     else if(end == 12)

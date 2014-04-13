@@ -1,21 +1,24 @@
 .event {
-  font-size: 20px;
+  line-height: 40px;
 }
 
 .event:not(:last-child) {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.3);
 }
 
 .event-title {
   float: left;
   font-weight: 400;
+  font-size: 25px;
 }
 
 .event-time {
   float: right;
   margin-left: 15px;
+  font-size: 18px;
+  color: rgba(200, 200, 200, 0.8);
+
 }
 
 #events {
-  width: 300px;
 }
