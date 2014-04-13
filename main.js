@@ -19,11 +19,15 @@ function update(){
   $("#container").html("");
   $('body').removeClass();
   if(mode == 'day') {
+    $('#black').hide();
     $("h1").html("Good morning, " + name + ".");
     $('body').addClass('day');
-  } else {
+  } else if(mode == 'night') {
+    $('#black').hide();
     $("h1").html("Welcome back, " + name + ".");
     $('body').addClass('night');
+  } else {
+    $('#black').show();
   }
   $.getJSON(baseUrl + 'widgets?user='+userId+'&mode='+mode, function(data){
     console.log(data);
@@ -41,6 +45,7 @@ function update(){
       var div = $('<iframe>');
       div.attr('src', url);
       div.addClass('item');
+      div.addClass('normal');
       
       // ZOMG HACKS
       if(widget.name == 'Appointments' || widget.name == 'Fireplace') {
@@ -50,6 +55,7 @@ function update(){
       }
     }
     $($("#container").children()[0]).addClass('large');
+    $($("#container").children()[0]).removeClass('normal');
   });
 }
 
