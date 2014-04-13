@@ -2,18 +2,31 @@
 var baseUrl = 'http://107.170.192.218/';
 var userId = '102190104458073909670';
 var mode = 'blank';
+var name = '';
 
 function poll(){
   $.get(baseUrl + 'mode?user='+userId, function(data){
-    if(mode != data){
+    if(mode != data.mode){
+      mode = data.mode;
+      name = data.name;
       update();
-      mode = data;
     }
   });
+  setTimeout(function() { poll() }, 5000);
 }
 
 function update(){
+  $("#container").html("");
+  $('body').removeClass();
+  if(mode == 'day') {
+    $("h1").html("Good morning, " + name + ".");
+    $('body').addClass('day');
+  } else {
+    $("h1").html("Welcome back, " + name + ".");
+    $('body').addClass('night');
+  }
   $.getJSON(baseUrl + 'widgets?user='+userId+'&mode='+mode, function(data){
+    console.log(data);
     for(var i=0; i<data.length; i++){
       var widget = data[i];
       var url = widget.url + "?";
@@ -27,6 +40,9 @@ function update(){
       console.log(url);
       var div = $('<iframe>');
       div.attr('src', url);
+      div.addClass('item');
+      if(i == 0){ div.addClass('large'); }
+      
       $('#container').append(div);
     }
   });
@@ -41,7 +57,7 @@ function startTime() {
   m=checkTime(m);
   s=checkTime(s);
   $("#clock").html(h + ":" + m);
-  setTimeout(function(){startTime()},3000);
+  setTimeout(function() { startTime() }, 3000);
 }
 
 function checkTime(i) {
@@ -52,6 +68,6 @@ function checkTime(i) {
 }
 
 $(document).ready(function() {
-  setInterval(poll, 5000);
+  poll();
   startTime();
 });
